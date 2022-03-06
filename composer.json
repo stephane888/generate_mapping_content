@@ -1,0 +1,14 @@
+{
+    "name": "stephane888/generate_mapping_content",
+    "description": "permet de generer du contenu à partir des termes taxo.",
+    "type": "drupal-module-custom",
+    "license": "MIt",
+    "authors": [
+        {
+            "name": "stephane888",
+            "email": "kksasteph888@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
