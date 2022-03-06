@@ -1,0 +1,22 @@
+
+# Contenu generer pour le referencement menu items definition
+entity.content_generate_entity.collection:
+  title: 'Contenu generer pour le referencement list'
+  route_name: entity.content_generate_entity.collection
+  description: 'List Contenu generer pour le referencement entities'
+  parent: system.admin_structure
+  weight: 100
+
+content_generate_entity.admin.structure.settings:
+  title: 'Contenu generer pour le referencement settings'
+  description: 'Configure Contenu generer pour le referencement entities'
+  route_name: content_generate_entity.settings
+  parent: system.admin_structure
+
+# Mappings entity menu items definition
+entity.mappings_entity.collection:
+  title: 'Mappings entity'
+  route_name: entity.mappings_entity.collection
+  description: 'List Mappings entity (bundles)'
+  parent: system.admin_structure
+  weight: 99

@@ -1,0 +1,6 @@
+name: Generate mapping content
+type: module
+description: permet de creer du contenu automatiquement, peut etre utiliser pour ameliorer le referencement.
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

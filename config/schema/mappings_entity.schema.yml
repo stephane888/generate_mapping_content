@@ -1,0 +1,21 @@
+generate_mapping_content.mappings_entity.*:
+  type: config_entity
+  label: 'Mappings entity config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    mappings:
+      type: mapping
+      label: 'Liste de données mappées'
+    default_values:
+      type: mapping
+      label: 'Valeur par defaut des champs (avec les variables)'
+    cron_status: 
+      type: string
+      label: "Status d'execution (true=>Run, false=>Stop)'"

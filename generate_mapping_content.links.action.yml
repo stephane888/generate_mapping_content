@@ -1,0 +1,10 @@
+entity.content_generate_entity.add_form:
+  route_name: entity.content_generate_entity.add_form
+  title: 'Add Contenu generer pour le referencement'
+  appears_on:
+    - entity.content_generate_entity.collection
+entity.mappings_entity.add_form:
+  route_name: entity.mappings_entity.add_form
+  title: 'Add Mappings entity'
+  appears_on:
+    - entity.mappings_entity.collection

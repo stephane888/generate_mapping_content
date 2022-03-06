@@ -1,0 +1,31 @@
+add contenu generer pour le referencement entities:
+  title: 'Create new Contenu generer pour le referencement entities'
+
+administer contenu generer pour le referencement entities:
+  title: 'Administer Contenu generer pour le referencement entities'
+  description: 'Allow to access the administration form to configure Contenu generer pour le referencement entities.'
+  restrict access: true
+
+delete contenu generer pour le referencement entities:
+  title: 'Delete Contenu generer pour le referencement entities'
+
+edit contenu generer pour le referencement entities:
+  title: 'Edit Contenu generer pour le referencement entities'
+
+view published contenu generer pour le referencement entities:
+  title: 'View published Contenu generer pour le referencement entities'
+
+view unpublished contenu generer pour le referencement entities:
+  title: 'View unpublished Contenu generer pour le referencement entities'
+
+view all contenu generer pour le referencement revisions:
+  title: 'View all Contenu generer pour le referencement revisions'
+
+revert all contenu generer pour le referencement revisions:
+  title: 'Revert all Contenu generer pour le referencement revisions'
+  description: 'Role requires permission <em>view Contenu generer pour le referencement revisions</em> and <em>edit rights</em> for contenu generer pour le referencement entities in question or <em>administer contenu generer pour le referencement entities</em>.'
+
+delete all contenu generer pour le referencement revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Contenu generer pour le referencement revisions</em> and <em>delete rights</em> for contenu generer pour le referencement entities in question or <em>administer contenu generer pour le referencement entities</em>.'
+

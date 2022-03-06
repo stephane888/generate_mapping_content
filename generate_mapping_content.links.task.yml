@@ -1,0 +1,26 @@
+# Contenu generer pour le referencement routing definition
+content_generate_entity.settings_tab:
+  route_name: content_generate_entity.settings
+  title: 'Settings'
+  base_route: content_generate_entity.settings
+
+entity.content_generate_entity.canonical:
+  route_name: entity.content_generate_entity.canonical
+  base_route: entity.content_generate_entity.canonical
+  title: 'View'
+
+entity.content_generate_entity.edit_form:
+  route_name: entity.content_generate_entity.edit_form
+  base_route: entity.content_generate_entity.canonical
+  title: 'Edit'
+
+entity.content_generate_entity.version_history:
+  route_name: entity.content_generate_entity.version_history
+  base_route: entity.content_generate_entity.canonical
+  title: 'Revisions'
+
+entity.content_generate_entity.delete_form:
+  route_name:  entity.content_generate_entity.delete_form
+  base_route:  entity.content_generate_entity.canonical
+  title: Delete
+  weight: 10
