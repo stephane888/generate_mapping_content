@@ -305,17 +305,43 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'title' => ''
     ]);
     //
-    $fields['introduction'] = BaseFieldDefinition::create('text_long')->setLabel(" Introduction ")->setRequired(TRUE)->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', [
-      'type' => 'string_textfield',
-      'format' => 'text_html'
+    // $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 ")->setRequired(false)->setDisplayConfigurable('form', [
+    // 'type' => 'string_textfield'
+    // ])->setDisplayConfigurable('view', TRUE)->setDefaultValue(GenerateMappingContentDefault::$description);
+    //
+    $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 ")->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        // 'autocomplete_type' => 'tags',
+        'placeholder' => ''
+      ]
+    ])->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', true)->setSetting('target_type', 'taxonomy_term')->setSetting('handler', 'default');
+    
+    $fields['term2'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 2 ")->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        // 'autocomplete_type' => 'tags',
+        'placeholder' => ''
+      ]
+    ])->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', true)->setSetting('target_type', 'taxonomy_term')->setSetting('handler', 'default');
+    //
+    $fields['introduction'] = BaseFieldDefinition::create('text_long')->setLabel(" Introduction ")->setSettings([
+      'text_processing' => 0,
+      'html_format' => "text_code"
     ])->setDisplayOptions('form', [
-      'type' => 'text_textfield',
+      'type' => 'text_textarea',
       'weight' => 0
     ])->setDisplayOptions('view', [
       'label' => 'hidden',
       'type' => 'text_default',
       'weight' => 0
-    ])->setDefaultValue(GenerateMappingContentDefault::$introduction);
+    ])->setRequired(TRUE)->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', true);
     //
     $fields['description'] = BaseFieldDefinition::create('text_long')->setLabel(" Description ")->setRequired(TRUE)->setDisplayConfigurable('form', [
       'type' => 'string_textfield'
