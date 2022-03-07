@@ -104,7 +104,7 @@ class ContentGenerateEntityForm extends ContentEntityForm {
       $forms = $mappings->getDisplayMappings();
     }
     $inputs = $form_state->getUserInput();
-    dump($inputs, $mappings->getDefaultValues());
+    
     foreach ($mappings->getDefaultValues() as $k => $val) {
       if (!empty($inputs[$k][0])) {
         $inputs[$k][0]['value'] = $val;
