@@ -112,7 +112,8 @@ class MappingsEntityForm extends EntityForm {
     $this->buildFieldMappings($mappings, $form, $form_state);
     // On contruit les champs qui doivent contenir le texte formatter.
     $default_values = $mappings_entity->get('default_values');
-    $this->ThemeUtility->addContainerTree('default_values', $form, ' Champs ', true);
+    // dump($mappings_entity->toArray());
+    // $this->ThemeUtility->addContainerTree('default_values', $form, ' Champs ', true, true);
     /**
      *
      * @var \Drupal\generate_mapping_content\ContentGenerateEntityStorage $genrateContentStorage
@@ -124,6 +125,11 @@ class MappingsEntityForm extends EntityForm {
      */
     $generateContent = $genrateContentStorage->create();
     $fields = $generateContent->getFieldDefinitions();
+    $form['default_values'] = [
+      '#tree' => TRUE,
+      '#prefix' => '<div id="gen--pping-content-default_values" >',
+      '#suffix' => '</div>'
+    ];
     foreach ($generateContent::listOverrideValueFields() as $value) {
       if (!empty($fields[$value])) {
         /**
