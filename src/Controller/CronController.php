@@ -58,10 +58,10 @@ class CronController extends ControllerBase {
     for ($i = 0; $i < $numbers; $i++) {
       $contentGenerate = ContentGenerateEntity::create($values);
       $contentGenerate->save();
-      // \Drupal::messenger()->addStatus(' ContentGenerate : ' . $contentGenerate->id());
-      // $term = \Drupal\taxonomy\Entity\Term::load($contentGenerate->get('term2')->target_id);
-      // if ($term)
-      // \Drupal::messenger()->addStatus(' taxo nomie ' . $term->getName());
+      \Drupal::messenger()->addStatus(' ContentGenerate : ' . $contentGenerate->id());
+      $term = \Drupal\taxonomy\Entity\Term::load($contentGenerate->get('term2')->target_id);
+      if ($term)
+        \Drupal::messenger()->addStatus(' taxo nomie ' . $term->getName());
     }
     $build['content'] = [
       '#type' => 'item',
