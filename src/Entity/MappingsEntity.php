@@ -95,8 +95,7 @@ class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface
    * on serra dans le cas de figure pas de blocks, // Bloc vide. On met null pour comme tid pour ce bloc.
    * On rcupere la valeur du prochain bloc et on relance la fonction sinon, on arrete.
    */
-  public function getReferenceValue($mid = null) {
-    $formatters = [];
+  public function getReferenceValue($mid = null, &$formatters = [], &$formattersAll = []) {
     $termsMappings = [];
     foreach ($this->mappings as $key => $value) {
       if ($value['source'] == 'terms' && !empty($value['key_mapping'])) {
@@ -108,17 +107,15 @@ class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface
     // // on verifie s'il ya deja des valeurs.
     // }
     // else
-    $this->getReferenceTermValue($termsMappings, $formatters);
+    $this->getReferenceTermValue($termsMappings, $formatters, $formattersAll);
     // update mappings
     $this->mappings = $termsMappings;
-    
-    return $formatters;
   }
   
   /**
    * --
    */
-  protected function getReferenceTermValue(&$termsMappings, &$formatters) {
+  protected function getReferenceTermValue(&$termsMappings, &$formatters, &$formattersAll) {
     $index = 0;
     
     foreach ($termsMappings as $key => $value) {
@@ -154,6 +151,7 @@ class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface
       else {
         $termsMappings[$key]['source_info']['lasttid'] = $val['tid'];
         $formatters['@' . $value['key_mapping']] = $val['name'];
+        $formattersAll[$value['key_mapping']] = $val;
       }
       //
       $index++;

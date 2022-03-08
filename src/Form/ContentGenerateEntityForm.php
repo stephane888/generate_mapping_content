@@ -46,6 +46,7 @@ class ContentGenerateEntityForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /* @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity $entity */
     $form = parent::buildForm($form, $form_state);
+    // dump($this->entity->get('term1')->target_id);
     //
     $form['mapping']['widget']['#ajax'] = [
       'callback' => '::selectMappingCallback',
@@ -53,7 +54,6 @@ class ContentGenerateEntityForm extends ContentEntityForm {
       'effect' => 'fade'
     ];
     // dump($this->entity->get('introduction')->getSettings());
-    //
     $form['fields_mappings'] = [
       '#tree' => TRUE,
       '#prefix' => '<div >',
@@ -104,10 +104,12 @@ class ContentGenerateEntityForm extends ContentEntityForm {
       $forms = $mappings->getDisplayMappings();
     }
     $inputs = $form_state->getUserInput();
-    
     foreach ($mappings->getDefaultValues() as $k => $val) {
       if (!empty($inputs[$k][0])) {
         $inputs[$k][0]['value'] = $val;
+        if ($k !== 'name') {
+          $inputs[$k][0]['format'] = 'text_html';
+        }
       }
     }
     $form_state->setUserInput($inputs);

@@ -139,8 +139,12 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
      * @var MappingsEntity $mappingDatas
      */
     $mappingDatas = $this->entityTypeManager()->getStorage("mappings_entity")->load($this->get('mapping')->value);
-    if ($mappingDatas)
+    if ($mappingDatas && !$this->id())
       $this->formattedReference($mappingDatas);
+    else {
+      // dump($this->get('introduction')->getValue());
+      // die();
+    }
   }
   
   /**
@@ -160,10 +164,31 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
    * @param MappingsEntity $mappingDatas
    */
   protected function formattedReference(MappingsEntity $mappingDatas) {
-    $references = $mappingDatas->getReferenceValue($this->id());
+    $formatters = [];
+    $termsMappings = [];
+    $mappingDatas->getReferenceValue($this->id(), $formatters, $termsMappings);
     $mappingDatas->save();
     foreach (self::listOverrideValueFields() as $fieldName) {
-      $this->set($fieldName, $this->search_remplace($this->get($fieldName)->value, $references));
+      $first = $this->get($fieldName)->first();
+      if ($first) {
+        $valeur = $first->getValue();
+        if (isset($valeur['value'])) {
+          $valeur['value'] = $this->search_remplace($valeur['value'], $formatters);
+        }
+        $this->set($fieldName, $valeur);
+      }
+    }
+    //
+    if (!empty($termsMappings['specialite'])) {
+      $this->set('term1', [
+        'target_id' => $termsMappings['specialite']['tid']
+      ]);
+    }
+    //
+    if (!empty($termsMappings['localisation'])) {
+      $this->set('term2', [
+        'target_id' => $termsMappings['localisation']['tid']
+      ]);
     }
   }
   
@@ -297,8 +322,8 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     $fields['image'] = BaseFieldDefinition::create('image')->setLabel(' Image ')->setRequired(false)->setDisplayConfigurable('form', [
       'type' => 'image'
     ])->setDisplayConfigurable('view', TRUE)->setSetting("min_resolution", "700x450")->setSetting('default_image', [
-      'target_id' => 1162,
-      'uuid' => '0515a5cc-8591-4f94-960f-7ca48f381a42',
+      'target_id' => 1406,
+      'uuid' => '21da205e-97b5-4817-b746-4da3d6a53813',
       'width' => 100,
       'height' => 100,
       'alt' => '',
@@ -309,7 +334,7 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     // 'type' => 'string_textfield'
     // ])->setDisplayConfigurable('view', TRUE)->setDefaultValue(GenerateMappingContentDefault::$description);
     //
-    $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 ")->setDisplayOptions('form', [
+    $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 (specialite)")->setDisplayOptions('form', [
       'type' => 'entity_reference_autocomplete',
       'weight' => 5,
       'settings' => [
@@ -320,7 +345,7 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       ]
     ])->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', true)->setSetting('target_type', 'taxonomy_term')->setSetting('handler', 'default');
     
-    $fields['term2'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 2 ")->setDisplayOptions('form', [
+    $fields['term2'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 2 (localisation)")->setDisplayOptions('form', [
       'type' => 'entity_reference_autocomplete',
       'weight' => 5,
       'settings' => [

@@ -1,0 +1,15 @@
+generate_mapping_content.cron:
+  path: '/generate-mapping-content/cron/{mapping_id}/{term_id_1}/{numbers}'
+  defaults:
+    _title: 'Cron'
+    _controller: '\Drupal\generate_mapping_content\Controller\CronController::build'
+  requirements:
+    _permission: 'access content'
+
+generate_mapping_content.crongenrate:
+  path: '/generate-mapping-content/cron'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\generate_mapping_content\Controller\CronController::testPage'
+  requirements:
+    _permission: 'access content'
