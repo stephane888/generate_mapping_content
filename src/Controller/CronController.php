@@ -7,6 +7,7 @@ use Drupal\generate_mapping_content\GenerateMappingContentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\generate_mapping_content\Entity\MappingsEntity;
 use Drupal\generate_mapping_content\Entity\ContentGenerateEntity;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for Generate mapping content routes.
@@ -25,7 +26,8 @@ class CronController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function build($mapping_id, $term_id_1, $numbers) {
+  public function build(Request $Request, $mapping_id, $term_id_1, $numbers) {
+    $showMessage = $Request->query->get('show-message');
     /**
      *
      * @var MappingsEntity $mapping
@@ -58,10 +60,12 @@ class CronController extends ControllerBase {
     for ($i = 0; $i < $numbers; $i++) {
       $contentGenerate = ContentGenerateEntity::create($values);
       $contentGenerate->save();
-      \Drupal::messenger()->addStatus(' ContentGenerate : ' . $contentGenerate->id());
-      $term = \Drupal\taxonomy\Entity\Term::load($contentGenerate->get('term2')->target_id);
-      if ($term)
-        \Drupal::messenger()->addStatus(' taxo nomie ' . $term->getName());
+      if ($showMessage) {
+        \Drupal::messenger()->addStatus(' ContentGenerate : ' . $contentGenerate->id());
+        $term = \Drupal\taxonomy\Entity\Term::load($contentGenerate->get('term2')->target_id);
+        if ($term)
+          \Drupal::messenger()->addStatus(' taxo nomie ' . $term->getName());
+      }
     }
     $build['content'] = [
       '#type' => 'item',
