@@ -12,8 +12,9 @@ use Drupal\Core\Link;
  * @ingroup generate_mapping_content
  */
 class ContentGenerateEntityListBuilder extends EntityListBuilder {
-
+  
   /**
+   *
    * {@inheritdoc}
    */
   public function buildHeader() {
@@ -21,19 +22,20 @@ class ContentGenerateEntityListBuilder extends EntityListBuilder {
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
-
+  
   /**
+   *
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
     /* @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity $entity */
-    $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
-      'entity.content_generate_entity.edit_form',
-      ['content_generate_entity' => $entity->id()]
-    );
+    $row['id'] = Link::createFromRoute('Voir : ' . $entity->id(), 'entity.content_generate_entity.canonical', [
+      'content_generate_entity' => $entity->id()
+    ]);
+    $row['name'] = Link::createFromRoute($entity->label(), 'entity.content_generate_entity.edit_form', [
+      'content_generate_entity' => $entity->id()
+    ]);
     return $row + parent::buildRow($entity);
   }
-
+  
 }
