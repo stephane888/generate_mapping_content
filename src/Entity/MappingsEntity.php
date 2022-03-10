@@ -36,6 +36,7 @@ use Drupal\generate_mapping_content\GenerateMappingContentException;
  *     "mappings",
  *     "default_values",
  *     "cron_status",
+ *     "image",
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/mappings_entity/{mappings_entity}",
@@ -82,6 +83,23 @@ class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface
    * @var boolean
    */
   protected $cron_status = true;
+  
+  /**
+   * -
+   *
+   * @var array
+   */
+  protected $image = [];
+  
+  /**
+   * Apres la sauvegrade.
+   *
+   * {@inheritdoc}
+   * @see \Drupal\Core\Entity\ContentEntityBase::postSave()
+   */
+  public function postSave($storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
   
   /**
    * On determine les valeurs qui doivent etre utiliser.

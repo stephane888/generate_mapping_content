@@ -57,6 +57,13 @@ class CronController extends ControllerBase {
         }
       }
     }
+    // check if image is defined
+    $fid = $mapping->get('image');
+    if (!empty($fid)) {
+      $values['image']['target_id'] = $fid[0];
+    }
+    
+    //
     for ($i = 0; $i < $numbers; $i++) {
       $contentGenerate = ContentGenerateEntity::create($values);
       $contentGenerate->save();

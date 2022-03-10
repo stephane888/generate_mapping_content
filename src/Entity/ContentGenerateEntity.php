@@ -100,14 +100,12 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
    */
   protected function urlRouteParameters($rel) {
     $uri_route_parameters = parent::urlRouteParameters($rel);
-    
     if ($rel === 'revision_revert' && $this instanceof RevisionableInterface) {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
     }
     elseif ($rel === 'revision_delete' && $this instanceof RevisionableInterface) {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
     }
-    
     return $uri_route_parameters;
   }
   

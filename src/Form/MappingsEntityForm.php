@@ -94,7 +94,15 @@ class MappingsEntityForm extends EntityForm {
       ],
       '#description' => ' Vous devez definir deux elements ( par defaut localisation et specialité) '
     ];
-    
+    //
+    $image = $mappings_entity->get('image');
+    $form['image'] = [
+      '#type' => 'managed_file',
+      '#title' => 'Image',
+      '#default_value' => !empty($image) ? $image : [],
+      '#upload_location' => 'public://generate-mapping-content'
+    ];
+    //
     $form['mappings'] = [
       '#tree' => TRUE,
       '#prefix' => '<div id="generate-mapping-content-mapping-entity" >',

@@ -19,3 +19,6 @@ generate_mapping_content.mappings_entity.*:
     cron_status: 
       type: string
       label: "Status d'execution (true=>Run, false=>Stop)'"
+    image:
+      type: mapping
+      label: 'Image'
