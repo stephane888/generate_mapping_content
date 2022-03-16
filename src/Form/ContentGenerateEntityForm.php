@@ -50,7 +50,7 @@ class ContentGenerateEntityForm extends ContentEntityForm {
     // dump(\Drupal::routeMatch()->getParameters()->all());
     $parameters = \Drupal::routeMatch()->getParameters()->all();
     // dump($parameters);
-    dump($this->entity->toArray());
+    // dump($this->entity->toArray());
     $mappings_entity = null;
     if (!empty($parameters['mappings_entity'])) {
       /**
