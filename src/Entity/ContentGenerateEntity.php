@@ -175,7 +175,10 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       if ($first) {
         $valeur = $first->getValue();
         if (isset($valeur['value'])) {
-          $valeur['value'] = $this->search_remplace($valeur['value'], $formatters);
+          if (isset($valeur['value']['value']))
+            $valeur['value'] = $this->search_remplace($valeur['value']['value'], $formatters);
+          else
+            $valeur['value'] = $this->search_remplace($valeur['value'], $formatters);
         }
         $this->set($fieldName, $valeur);
       }
