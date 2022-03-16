@@ -310,6 +310,11 @@ class MappingsEntity extends ConfigEntityBundleBase implements MappingsEntityInt
     return $html;
   }
   
+  /**
+    * Undocumented function
+    *
+    * @return void
+    */
   public function getDefaultValues() {
     return $this->get('default_values');
   }

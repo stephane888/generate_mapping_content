@@ -150,14 +150,21 @@ class MappingsEntityForm extends EntityForm {
          * @var \Drupal\Core\Field\BaseFieldDefinition $field
          */
         $field = $fields[$value];
+        $val = null;
+        if (!empty($default_values[$value])) {
+          if (!empty($default_values[$value]['value']))
+            $val = $default_values[$value]['value'];
+          else
+            $val = $default_values[$value];
+        }
         $form['default_values'][$value] = [
           '#type' => 'textfield',
           '#title' => $field->getLabel(),
-          '#default_value' => !empty($default_values[$value]) ? $default_values[$value] : null
+          '#default_value' => $val
         ];
         // dump($field->getType());
         if ($field->getType() == 'text_long') {
-          $form['default_values'][$value]['#type'] = 'textarea';
+          $form['default_values'][$value]['#type'] = 'text_format';
         }
       }
     }

@@ -7,10 +7,13 @@ generate_mapping_content.cron:
   requirements:
     _permission: 'access content'
 
+
+
+
 generate_mapping_content.crongenrate:
   path: '/generate-mapping-content/cron'
   defaults:
     _title: 'Example'
     _controller: '\Drupal\generate_mapping_content\Controller\CronController::testPage'
   requirements:
-    _permission: 'access content'
+    _permission: 'Access content'

@@ -223,7 +223,10 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       $default_values = $mappingEntity->get('default_values');
       foreach ($default_values as $key => $value) {
         if ($entity->hasField($key)) {
-          $entity->set($key, $value);
+          if (isset($value['value']))
+            $entity->set($key, $value['value']);
+          else
+            $entity->set($key, $value);
         }
       }
     }
