@@ -2,8 +2,8 @@
 
 namespace Drupal\generate_mapping_content\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\generate_mapping_content\GenerateMappingContentException;
+use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 
 /**
  * Defines the Mappings entity entity.
@@ -25,6 +25,7 @@ use Drupal\generate_mapping_content\GenerateMappingContentException;
  *   },
  *   config_prefix = "mappings_entity",
  *   admin_permission = "administer site configuration",
+ *   bundle_of = "content_generate_entity",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
@@ -47,7 +48,7 @@ use Drupal\generate_mapping_content\GenerateMappingContentException;
  *   }
  * )
  */
-class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface {
+class MappingsEntity extends ConfigEntityBundleBase implements MappingsEntityInterface {
   
   /**
    * The Mappings entity ID.
@@ -99,6 +100,13 @@ class MappingsEntity extends ConfigEntityBase implements MappingsEntityInterface
    */
   public function postSave($storage, $update = TRUE) {
     parent::postSave($storage, $update);
+    // save image
+    $fid = $this->get('image');
+    if (!empty($fid)) {
+      $file = \Drupal\file\Entity\File::load($fid[0]);
+      $file->setPermanent();
+      $file->save();
+    }
   }
   
   /**

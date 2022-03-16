@@ -1,8 +1,8 @@
 # Contenu generer pour le referencement routing definition
-content_generate_entity.settings_tab:
-  route_name: content_generate_entity.settings
-  title: 'Settings'
-  base_route: content_generate_entity.settings
+#content_generate_entity.settings_tab:
+#  route_name: entity.mappings_entity.edit_form
+#  title: 'Settings'
+#  base_route: entity.mappings_entity.edit_form
 
 entity.content_generate_entity.canonical:
   route_name: entity.content_generate_entity.canonical

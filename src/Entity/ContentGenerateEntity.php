@@ -25,6 +25,7 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
  * @ContentEntityType(
  *   id = "content_generate_entity",
  *   label = @Translation("Contenu generer pour le referencement"),
+ *   bundle_label = @Translation("Mappings entity"),
  *   handlers = {
  *     "storage" = "Drupal\generate_mapping_content\ContentGenerateEntityStorage",
  *     "view_builder" = "Drupal\generate_mapping_content\ContentGenerateEntityViewBuilder",
@@ -48,11 +49,13 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
  *   revision_table = "content_generate_entity_revision",
  *   revision_data_table = "content_generate_entity_field_revision",
  *   translatable = TRUE,
+ *   permission_granularity = "bundle",
  *   admin_permission = "administer contenu generer pour le referencement entities",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "vid",
  *     "label" = "name",
+ *     "bundle" = "mapping",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
@@ -65,7 +68,7 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
  *   },
  *   links = {
  *     "canonical" = "/content-generate-entity/{content_generate_entity}",
- *     "add-form" = "/admin/structure/content_generate_entity/add",
+ *     "add-form" = "/admin/structure/content_generate_entity/add/{mappings_entity}",
  *     "edit-form" = "/admin/structure/content_generate_entity/{content_generate_entity}/edit",
  *     "delete-form" = "/admin/structure/content_generate_entity/{content_generate_entity}/delete",
  *     "version-history" = "/admin/structure/content_generate_entity/{content_generate_entity}/revisions",
@@ -75,7 +78,8 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
  *     "translation_revert" = "/admin/structure/content_generate_entity/{content_generate_entity}/revisions/{content_generate_entity_revision}/revert/{langcode}",
  *     "collection" = "/admin/structure/content_generate_entity",
  *   },
- *   field_ui_base_route = "content_generate_entity.settings"
+ *   bundle_entity_type = "mappings_entity",
+ *   field_ui_base_route = "entity.mappings_entity.edit_form"
  * )
  */
 class ContentGenerateEntity extends EditorialContentEntityBase implements ContentGenerateEntityInterface {
@@ -316,6 +320,8 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
+    
+    // $fields['type'] = BaseFieldDefinition::create('entity_reference')->setLabel($entity_type->getBundleLabel())->setSetting('target_type', 'mappings_entity')->setRequired(TRUE)->setReadOnly(TRUE);
     // Add specifis fields.
     $fields['image'] = BaseFieldDefinition::create('image')->setLabel(' Image ')->setRequired(false)->setDisplayConfigurable('form', [
       'type' => 'image'
@@ -366,18 +372,38 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'weight' => 0
     ])->setRequired(TRUE)->setDisplayConfigurable('view', TRUE)->setDisplayConfigurable('form', true);
     //
-    $fields['description'] = BaseFieldDefinition::create('text_long')->setLabel(" Description ")->setRequired(TRUE)->setDisplayConfigurable('form', [
-      'type' => 'string_textfield'
-    ])->setDisplayConfigurable('view', TRUE)->setDefaultValue(GenerateMappingContentDefault::$description);
+    $fields['description'] = BaseFieldDefinition::create('text_long')->setLabel(" Description ")->setSettings([
+      'text_processing' => 0,
+      'html_format' => "text_code"
+    ])->setRequired(TRUE)->setDisplayConfigurable('form', true)->setDisplayConfigurable('view', TRUE)->setDisplayOptions('form', [
+      'type' => 'text_textarea',
+      'weight' => 0
+    ])->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'text_default',
+      'weight' => 0
+    ])->setDefaultValue(GenerateMappingContentDefault::$description);
     //
-    $fields['mapping'] = BaseFieldDefinition::create('list_string')->setLabel(" Mapping ")->setRequired(TRUE)->setDisplayConfigurable('form', [
-      'type' => 'options_select',
-      'settings' => [],
-      'weight' => -20
-    ])->setDisplayConfigurable('view', TRUE)->setSetting('allowed_values_function', [
+    $fields['mapping'] = BaseFieldDefinition::create('list_string')->setLabel(" Mapping ")->setSetting('allowed_values_function', [
       '\Drupal\generate_mapping_content\GenerateMappingContent',
       'listMappings'
-    ]);
+    ])->setReadOnly(true)->setRequired(TRUE)->setDisplayConfigurable('form', true)->setDisplayConfigurable('view', TRUE);
+    
+    // $fields['type'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Mapping entity (Bundle) '))->setDescription(t('The user ID of author of the Contenu generer pour le referencement
+    // entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'mappings_entity')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+    // 'label' => 'hidden',
+    // 'type' => 'author',
+    // 'weight' => 0
+    // ])->setDisplayOptions('form', [
+    // 'type' => 'entity_reference_autocomplete',
+    // 'weight' => 5,
+    // 'settings' => [
+    // 'match_operator' => 'CONTAINS',
+    // 'size' => '60',
+    // 'autocomplete_type' => 'tags',
+    // 'placeholder' => ''
+    // ]
+    // ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
     
     // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);

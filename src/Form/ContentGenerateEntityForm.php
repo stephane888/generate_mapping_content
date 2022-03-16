@@ -46,13 +46,28 @@ class ContentGenerateEntityForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /* @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity $entity */
     $form = parent::buildForm($form, $form_state);
-    // dump($this->entity->get('term1')->target_id);
-    //
+    // dump($form);
+    // dump(\Drupal::routeMatch()->getParameters()->all());
+    $parameters = \Drupal::routeMatch()->getParameters()->all();
+    // dump($parameters);
+    dump($this->entity->toArray());
+    $mappings_entity = null;
+    if (!empty($parameters['mappings_entity'])) {
+      /**
+       *
+       * @var \Drupal\generate_mapping_content\Entity\MappingsEntity $mappings_entity
+       */
+      $mappings_entity = $parameters['mappings_entity'];
+    }
+    // dump($this->entity->getEntityType()->getKeys());
+    // dump($this->entity->getEntityType()->getBundleEntityType());
+    // dump($form);
     $form['mapping']['widget']['#ajax'] = [
       'callback' => '::selectMappingCallback',
       'wrapper' => 'mapping-content-generate-entity',
       'effect' => 'fade'
     ];
+    
     // dump($this->entity->get('introduction')->getSettings());
     $form['fields_mappings'] = [
       '#tree' => TRUE,
@@ -70,8 +85,20 @@ class ContentGenerateEntityForm extends ContentEntityForm {
       $value = $form_state->getValue('mapping');
       $value = reset($value);
     }
-    if (!empty($value['value']))
+    elseif (!empty($mappings_entity)) {
+      foreach ($mappings_entity->getDefaultValues() as $key => $val) {
+        if (!empty($form[$key])) {
+          if (!empty($form[$key]['widget'][0]['value']))
+            $form[$key]['widget'][0]['value']['#default_value'] = $val;
+          else
+            $form[$key]['widget'][0]['#default_value'] = $val;
+        }
+      }
+    }
+    // dump($form);
+    if (!empty($value['value'])) {
       $this->displayKey($value['value'], $form['fields_mappings'], $form_state);
+    }
     
     if (!$this->entity->isNew()) {
       $form['new_revision'] = [
@@ -81,7 +108,6 @@ class ContentGenerateEntityForm extends ContentEntityForm {
         '#weight' => 10
       ];
     }
-    
     return $form;
   }
   
@@ -100,19 +126,22 @@ class ContentGenerateEntityForm extends ContentEntityForm {
      * @var \Drupal\generate_mapping_content\Entity\MappingsEntity $mappings
      */
     $mappings = $mappingsStorage->load($plugin_id);
+    
     if ($mappings) {
       $forms = $mappings->getDisplayMappings();
     }
     $inputs = $form_state->getUserInput();
-    foreach ($mappings->getDefaultValues() as $k => $val) {
-      if (!empty($inputs[$k][0])) {
-        $inputs[$k][0]['value'] = $val;
-        if ($k !== 'name') {
-          $inputs[$k][0]['format'] = 'text_html';
+    if (!empty($inputs)) {
+      foreach ($mappings->getDefaultValues() as $k => $val) {
+        if (!empty($inputs[$k][0])) {
+          $inputs[$k][0]['value'] = $val;
+          if ($k !== 'name') {
+            $inputs[$k][0]['format'] = 'text_html';
+          }
         }
       }
+      $form_state->setUserInput($inputs);
     }
-    $form_state->setUserInput($inputs);
   }
   
   /**

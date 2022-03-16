@@ -7,11 +7,11 @@ entity.content_generate_entity.collection:
   parent: system.admin_structure
   weight: 100
 
-content_generate_entity.admin.structure.settings:
-  title: 'Contenu generer pour le referencement settings'
-  description: 'Configure Contenu generer pour le referencement entities'
-  route_name: content_generate_entity.settings
-  parent: system.admin_structure
+#content_generate_entity.admin.structure.settings:
+#  title: 'Contenu generer pour le referencement settings'
+#  description: 'Configure Contenu generer pour le referencement entities'
+#  route_name: entity.mappings_entity.edit_form
+#  parent: system.admin_structure
 
 # Mappings entity menu items definition
 entity.mappings_entity.collection:

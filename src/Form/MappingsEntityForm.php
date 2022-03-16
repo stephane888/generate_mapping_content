@@ -127,11 +127,16 @@ class MappingsEntityForm extends EntityForm {
      * @var \Drupal\generate_mapping_content\ContentGenerateEntityStorage $genrateContentStorage
      */
     $genrateContentStorage = $this->entityTypeManager->getStorage('content_generate_entity');
+    
     /**
      *
-     * @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity $generateContent
+     * @deprecated : on doit trouver un autre moyen d'avoir la liste de tous les champs par defaut, et voir memem si cest possible.
+     * @var \Drupal\Core\Entity\ContentEntityType $generateContent
      */
-    $generateContent = $genrateContentStorage->create();
+    $generateContent = $genrateContentStorage->create([
+      'mapping' => 'faux_content'
+    ]);
+    // dump($generateContent->get($property));
     $fields = $generateContent->getFieldDefinitions();
     $form['default_values'] = [
       '#tree' => TRUE,
