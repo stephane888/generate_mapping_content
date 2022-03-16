@@ -26,7 +26,7 @@ class CronController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function build(Request $Request, $mapping_id, $term_id_1, $numbers) {
+  public function build(Request $Request, $mapping_id, $numbers, $term_id_1 = null) {
     $showMessage = $Request->query->get('show-message');
     /**
      *
@@ -39,13 +39,15 @@ class CronController extends ControllerBase {
         [
           'value' => $mapping_id
         ]
-      ],
-      'term1' => [
+      ]
+    ];
+    if ($term_id_1) {
+      $values['term1'] = [
         [
           'target_id' => $term_id_1
         ]
-      ]
-    ];
+      ];
+    }
     //
     foreach (ContentGenerateEntity::listOverrideValueFields() as $fielName) {
       if (!empty($defaults[$fielName])) {

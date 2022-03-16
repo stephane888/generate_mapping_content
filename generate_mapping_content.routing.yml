@@ -1,8 +1,9 @@
 generate_mapping_content.cron:
-  path: '/generate-mapping-content/cron/{mapping_id}/{term_id_1}/{numbers}'
+  path: '/generate-mapping-content/cron/{mapping_id}/{numbers}/{term_id_1}'
   defaults:
     _title: 'Cron'
     _controller: '\Drupal\generate_mapping_content\Controller\CronController::build'
+    term_id_1: null
   requirements:
     _permission: 'access content'
 
