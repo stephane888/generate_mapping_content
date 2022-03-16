@@ -151,9 +151,12 @@ class MappingsEntityForm extends EntityForm {
          */
         $field = $fields[$value];
         $val = null;
+        $format = null;
         if (!empty($default_values[$value])) {
-          if (!empty($default_values[$value]['value']))
+          if (!empty($default_values[$value]['value'])) {
             $val = $default_values[$value]['value'];
+            $format = $default_values[$value]['format'];
+          }
           else
             $val = $default_values[$value];
         }
@@ -165,6 +168,7 @@ class MappingsEntityForm extends EntityForm {
         // dump($field->getType());
         if ($field->getType() == 'text_long') {
           $form['default_values'][$value]['#type'] = 'text_format';
+          $form['default_values'][$value]['#format'] = $format;
         }
       }
     }
