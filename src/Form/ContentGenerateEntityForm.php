@@ -87,6 +87,8 @@ class ContentGenerateEntityForm extends ContentEntityForm {
     }
     elseif (!empty($mappings_entity)) {
       foreach ($mappings_entity->getDefaultValues() as $key => $val) {
+        if (is_array($val))
+          $val = $val['value'];
         if (!empty($form[$key])) {
           if (!empty($form[$key]['widget'][0]['value']))
             $form[$key]['widget'][0]['value']['#default_value'] = $val;
