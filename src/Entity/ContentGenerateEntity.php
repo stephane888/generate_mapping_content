@@ -395,6 +395,21 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'listMappings'
     ])->setReadOnly(true)->setRequired(TRUE)->setDisplayConfigurable('form', true)->setDisplayConfigurable('view', TRUE);
     
+    $fields['similaires'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Contenu similaire '))->setSetting('target_type', 'content_generate_entity')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'author',
+      'weight' => 0
+    ])->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => ''
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(-1);
+    
     // $fields['type'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Mapping entity (Bundle) '))->setDescription(t('The user ID of author of the Contenu generer pour le referencement
     // entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'mappings_entity')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
     // 'label' => 'hidden',
@@ -453,5 +468,6 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     $fields['changed'] = BaseFieldDefinition::create('changed')->setLabel(t('Changed'))->setDescription(t('The time that the entity was last edited.'));
     $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE)->setTranslatable(TRUE);
     return $fields;
-  }  
+  }
+  
 }
