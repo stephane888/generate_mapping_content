@@ -20,6 +20,7 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
 /**
  * Defines the Contenu generer pour le referencement entity.
  *
+ *
  * @ingroup generate_mapping_content
  *
  * @ContentEntityType(
@@ -135,7 +136,8 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     }
     
     // Remplace les variables avant la sauvegarde.
-    // Les travaux d'isolation de votre maison à @localisation @title @simples et sans surprise.
+    // Les travaux d'isolation de votre maison à @localisation @title @simples
+    // et sans surprise.
     /**
      *
      * @var MappingsEntity $mappingDatas
@@ -205,11 +207,13 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
   public static function postLoad(EntityStorageInterface $storage, array &$entities) {
     parent::postLoad($storage, $entities);
     // dump(\Drupal::routeMatch()->getParameters());
-    // $storageMAppings = \Drupal::entityTypeManager()->getStorage('mappings_entity');
+    // $storageMAppings =
+    // \Drupal::entityTypeManager()->getStorage('mappings_entity');
     // foreach ($entities as $k => $entity) {
     // /**
     // *
-    // * @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity $entity
+    // * @var \Drupal\generate_mapping_content\Entity\ContentGenerateEntity
+    // $entity
     // */
     // $entities[$k] = self::seresetFormatterField($entity, $storageMAppings);
     // }
@@ -327,7 +331,9 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     
-    // $fields['type'] = BaseFieldDefinition::create('entity_reference')->setLabel($entity_type->getBundleLabel())->setSetting('target_type', 'mappings_entity')->setRequired(TRUE)->setReadOnly(TRUE);
+    // $fields['type'] =
+    // BaseFieldDefinition::create('entity_reference')->setLabel($entity_type->getBundleLabel())->setSetting('target_type',
+    // 'mappings_entity')->setRequired(TRUE)->setReadOnly(TRUE);
     // Add specifis fields.
     $fields['image'] = BaseFieldDefinition::create('image')->setLabel(' Image ')->setRequired(false)->setDisplayConfigurable('form', [
       'type' => 'image'
@@ -340,9 +346,12 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'title' => ''
     ]);
     //
-    // $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 ")->setRequired(false)->setDisplayConfigurable('form', [
+    // $fields['term1'] =
+    // BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1
+    // ")->setRequired(false)->setDisplayConfigurable('form', [
     // 'type' => 'string_textfield'
-    // ])->setDisplayConfigurable('view', TRUE)->setDefaultValue(GenerateMappingContentDefault::$description);
+    // ])->setDisplayConfigurable('view',
+    // TRUE)->setDefaultValue(GenerateMappingContentDefault::$description);
     //
     $fields['term1'] = BaseFieldDefinition::create('entity_reference')->setLabel(" Term 1 (specialite)")->setDisplayOptions('form', [
       'type' => 'entity_reference_autocomplete',
@@ -395,7 +404,11 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'listMappings'
     ])->setReadOnly(true)->setRequired(TRUE)->setDisplayConfigurable('form', true)->setDisplayConfigurable('view', TRUE);
     
-    $fields['similaires'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Contenu similaire '))->setSetting('target_type', 'content_generate_entity')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+    // $fields['mappings_entity']=BaseFieldDefinition::create('entity_reference')->setLabel(t('
+    // Contenu similaire '))->setSetting('target_type',
+    // 'mappings_entity')->setSetting('handler', 'default');
+    
+    $fields['similaires'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Contenu similaire '))->setSetting('target_type', 'content_generate_entity')->setSetting('handler', 'default')->setDisplayOptions('view', [
       'label' => 'hidden',
       'type' => 'author',
       'weight' => 0
@@ -410,8 +423,13 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       ]
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(-1);
     
-    // $fields['type'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Mapping entity (Bundle) '))->setDescription(t('The user ID of author of the Contenu generer pour le referencement
-    // entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'mappings_entity')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+    // $fields['type'] =
+    // BaseFieldDefinition::create('entity_reference')->setLabel(t(' Mapping
+    // entity (Bundle) '))->setDescription(t('The user ID of author of the
+    // Contenu generer pour le referencement
+    // entity.'))->setRevisionable(TRUE)->setSetting('target_type',
+    // 'mappings_entity')->setSetting('handler',
+    // 'default')->setDisplayOptions('view', [
     // 'label' => 'hidden',
     // 'type' => 'author',
     // 'weight' => 0
@@ -424,7 +442,8 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     // 'autocomplete_type' => 'tags',
     // 'placeholder' => ''
     // ]
-    // ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
+    // ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view',
+    // TRUE);
     
     // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);
@@ -449,7 +468,7 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
       'weight' => -3
     ]);
     
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Authored by'))->setDescription(t('The user ID of author of the Contenu generer pour le referencement entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'user')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Authored by'))->setDescription(t('The user ID of author of the Contenu generer pour le referencement entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'user')->setSetting('handler', 'default')->setDisplayOptions('view', [
       'label' => 'hidden',
       'type' => 'author',
       'weight' => 0
@@ -466,7 +485,7 @@ class ContentGenerateEntity extends EditorialContentEntityBase implements Conten
     
     $fields['created'] = BaseFieldDefinition::create('created')->setLabel(t('Created'))->setDescription(t('The time that the entity was created.'));
     $fields['changed'] = BaseFieldDefinition::create('changed')->setLabel(t('Changed'))->setDescription(t('The time that the entity was last edited.'));
-    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE)->setTranslatable(TRUE);
+    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE);
     return $fields;
   }
   

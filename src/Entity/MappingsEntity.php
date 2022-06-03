@@ -23,8 +23,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *       "html" = "Drupal\generate_mapping_content\MappingsEntityHtmlRouteProvider",
  *     },
  *   },
- *   config_prefix = "mappings_entity",
  *   admin_permission = "administer site configuration",
+ *   config_prefix = "mappings_entity",
  *   bundle_of = "content_generate_entity",
  *   entity_keys = {
  *     "id" = "id",
